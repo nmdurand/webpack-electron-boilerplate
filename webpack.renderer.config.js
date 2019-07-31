@@ -3,10 +3,10 @@ const path = require('path');
 
 module.exports = {
 	mode: 'development',
-	entry: './src/renderer/index.coffee',
+	entry: './src/electron-app/renderer/index.coffee',
 	output: {
 		filename: 'renderer.js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'dist', 'renderer')
 	},
 	target: 'electron-renderer',
 	module: {
@@ -49,7 +49,7 @@ module.exports = {
 		]
 	},
 	plugins: [new HtmlWebpackPlugin({
-			template: "./src/renderer/index.html"
+			template: "./src/electron-app/renderer/index.html"
 		})
 	]
 };

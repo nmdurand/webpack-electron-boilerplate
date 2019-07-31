@@ -1,12 +1,12 @@
 import _ from 'lodash'
 import $ from 'jquery'
-import '../styles/style.scss'
+import './styles/style.scss'
 require 'typeface-ubuntu'
 require 'typeface-ubuntu-mono'
 import '@fortawesome/fontawesome-free/css/all.css'
 
-basicTemplate = require '../templates/basic.hbs'
-faTemplate = require '../templates/fa.hbs'
+basicTemplate = require './templates/basic.hbs'
+faTemplate = require './templates/fa.hbs'
 
 component = ->
 	element = document.createElement 'div'
