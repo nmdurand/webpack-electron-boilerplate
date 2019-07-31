@@ -1,8 +1,9 @@
 /node_modules
-/dist
 /.tmp
 /.tmpdata
 /.sass-cache
 *.data
 *.log
 .DS_Store
+/dist/*
+!/dist/index.html
