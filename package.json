@@ -36,7 +36,6 @@
     "express": "^4.17.1",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
-    "typeface-ubuntu": "0.0.65",
-    "typeface-ubuntu-mono": "0.0.72"
+    "typeface-ubuntu": "0.0.65"
   }
 }
