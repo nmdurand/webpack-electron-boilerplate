@@ -6,9 +6,10 @@ module.exports = {
 	entry: './src/electron-app/renderer/index.coffee',
 	output: {
 		filename: 'renderer.js',
-		path: path.resolve(__dirname, 'dist', 'renderer')
+		path: path.join(__dirname, 'dist', 'renderer')
 	},
 	target: 'electron-renderer',
+	devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{

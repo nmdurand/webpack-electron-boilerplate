@@ -9,6 +9,7 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist', 'public')
 	},
 	target: 'electron-renderer',
+	devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{

@@ -7,6 +7,9 @@ win = null
 # Set up server
 require './server/express.coffee'
 
+# Initialize electron-reload
+require('electron-reload') __dirname
+
 app.on 'ready', ->
 	win = new BrowserWindow()
 
