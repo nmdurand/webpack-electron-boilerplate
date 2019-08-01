@@ -4,7 +4,8 @@ import { app, BrowserWindow } from 'electron'
 
 win = null
 
-require path.resolve('../server/express')
+# Set up server
+require './server/express.coffee'
 
 app.on 'ready', ->
 	win = new BrowserWindow()

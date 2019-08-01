@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rm -rf dist",
     "dev": "npm run clean && webpack",
     "prod": "npm run clean && webpack -p",
     "start": "electron dist/main.js"
@@ -22,7 +22,6 @@
     "handlebars-loader": "^1.7.1",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.12.0",
-    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.38.0",

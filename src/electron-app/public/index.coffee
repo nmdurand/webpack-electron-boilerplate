@@ -1,7 +1,5 @@
 import _ from 'lodash'
 import './styles/style.scss'
-require 'typeface-ubuntu'
-require 'typeface-ubuntu-mono'
 import '@fortawesome/fontawesome-free/css/all.css'
 
 basicTemplate = require './templates/basic.hbs'
@@ -26,7 +24,6 @@ renderFA = (icon)->
 	style = 's'
 	renderTemplate faTemplate, {style:style, icon:icon}
 
-document.body.appendChild component()
-document.body.appendChild renderTemplate(basicTemplate, {myValue: 'This is a rendered hbs template!'})
-document.body.appendChild renderFA('address-book')
-document.body.appendChild renderFA('apple-alt')
+document.body.appendChild renderTemplate(basicTemplate, {myValue: 'My hbs template is rendered!'})
+document.body.appendChild renderFA('addressair-freshener')
+document.body.appendChild renderFA('acorn')
