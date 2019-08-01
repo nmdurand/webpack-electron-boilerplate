@@ -25,5 +25,5 @@ renderFA = (icon)->
 	renderTemplate faTemplate, {style:style, icon:icon}
 
 document.body.appendChild renderTemplate(basicTemplate, {myValue: 'My hbs template is rendered!'})
-document.body.appendChild renderFA('addressair-freshener')
-document.body.appendChild renderFA('acorn')
+document.body.appendChild renderFA('air-freshener')
+document.body.appendChild renderFA('ambulance')

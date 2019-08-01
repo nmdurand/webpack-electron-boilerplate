@@ -6,7 +6,7 @@ module.exports = {
 	entry: './src/electron-app/server/express.coffee',
 	output: {
 		filename: 'express.js',
-		path: path.resolve(__dirname, 'dist', 'server')
+		path: path.resolve(__dirname, 'dist')
 	},
 	target: 'node',
 	externals: [nodeExternals()],

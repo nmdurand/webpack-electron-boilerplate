@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf dist",
+    "serve": "npm run clean && webpack --config webpack.serve.config.js && node dist/express.js",
     "dev": "npm run clean && webpack",
     "prod": "npm run clean && webpack -p",
     "start": "electron dist/main.js"
