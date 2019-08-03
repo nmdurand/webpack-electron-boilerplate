@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	mode: 'development',
@@ -18,8 +19,16 @@ module.exports = {
 		rules: [
 			{
 				test: /\.coffee$/,
-				use: [ 'coffee-loader' ]
+			 	loader: 'coffee-loader'
 			}
 		]
-	}
+	},
+	plugins:[
+		new CopyPlugin([
+			{
+				from: './package.json',
+				to: './package.json'
+			}
+		])
+	]
 };

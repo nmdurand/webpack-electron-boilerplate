@@ -1,0 +1,15 @@
+{{#if isComment}}
+	<div class="lineContent comment">{{text}}</div>
+{{else if isLinebreak}}
+	<div class="lineContent linebreak"></div>
+{{else}}
+	<div class="lineContent">{{!
+	}}{{#each lineContent}}{{! Using comments to avoid whitespaces messing with layout.
+			}}{{#if isChord}}{{!
+			}}<span class="chord {{#if alignRight}}alignRight{{/if}} {{#if small}}small{{/if}}">{{name}}</span>{{!
+			}}{{else}}{{!
+				}}{{this}}{{!
+			}}{{/if}}{{!
+		}}{{/each}}{{!
+	}}</div>
+{{/if}}

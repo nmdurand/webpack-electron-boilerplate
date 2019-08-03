@@ -1,0 +1,18 @@
+{
+	"appenders": [
+		{
+			"type": "console"
+		},
+		{
+			"type": "dateFile",
+			"filename": "logs/output.log",
+			"pattern": "-yyyy-MM-dd"
+		}
+	],
+	"levels": {
+		"[default]": "DEBUG",
+		"express": "INFO"
+	},
+
+	"replaceConsole": true
+}

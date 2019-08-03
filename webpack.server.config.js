@@ -21,10 +21,5 @@ module.exports = {
 				use: [ 'coffee-loader' ]
 			}
 		]
-	},
-	optimization: {
-		splitChunks: {
-			chunks: 'all'
-		}
 	}
 };

@@ -1,0 +1,14 @@
+$phone-max-width: 767px;
+
+@media screen and (max-width: $phone-max-width){
+	#mainContainer{
+		.songListScreen{
+			#titleBar{
+				.navbar-form{
+					margin-top: 0;
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}

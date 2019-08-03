@@ -1,0 +1,9 @@
+{{#if fileError}}
+	File Error : {{file}}
+{{else}}
+	{{ artist }} &mdash; {{ title }}
+	<div class="key">{{ key }}</div>
+	{{#each labels}}
+		<div class="label" data-label="{{this}}">{{this}}</div>
+	{{/each}}
+{{/if}}

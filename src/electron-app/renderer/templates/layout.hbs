@@ -1,0 +1,22 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header" id="titlebar">
+			<a class="navbar-brand">{{manifest.name}} <span id="appVersion">v{{manifest.version}}</span></a>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a id="exportCSVButton" title="ExportCSV" class="button"><span class="glyphicon glyphicon-save"></span></a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical"></span></a>
+				<ul class="dropdown-menu">
+					<li id="editConfig"><a class="button"><span class="glyphicon glyphicon-cog"></span> Edit Config</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</nav>
+<div id="body">
+	<div id="dataPath"></div>
+	<div id="addresses"></div>
+	<div id="qrcode"></div>
+</div>

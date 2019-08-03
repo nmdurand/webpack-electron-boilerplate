@@ -1,11 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
 	mode: 'development',
-	entry: './src/electron-app/public/index.coffee',
+	entry: './src/electron-app/client/main.coffee',
 	output: {
-		filename: 'index.js',
+		filename: 'main.js',
 		path: path.resolve(__dirname, 'dist', 'public')
 	},
 	target: 'electron-renderer',
@@ -46,11 +48,36 @@ module.exports = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'images/'
+						}
+					}
+				]
 			}
 		]
 	},
-	plugins: [new HtmlWebpackPlugin({
-			template: "./src/electron-app/public/index.html"
+	externals: [
+		/^socket$/
+	],
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: "./src/electron-app/client/index.html"
+		}),
+		new CopyPlugin([
+			{
+				from: './src/electron-app/client/images/favicon.ico',
+				to: './images/favicon.ico'
+			}
+		]),
+		new webpack.ProvidePlugin({
+			$: "jquery",
+			jQuery: "jquery"
 		})
 	]
 };

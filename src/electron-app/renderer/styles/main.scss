@@ -1,0 +1,197 @@
+
+$errorColor: tomato;
+$okColor: lightGreen;
+$grid-float-breakpoint: 768px;
+
+* {
+	cursor: default;
+}
+
+html, body {
+	min-height: 100vh;
+}
+
+body {
+	margin: 0;
+
+	background-color: lightblue;
+	background-image: url('../images/karaokeBackground.png');
+	background-size: contain;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	font-family: HelveticaNeue;
+
+	-webkit-user-select: none;
+	padding: 0;
+	padding-top: 50px;
+
+	box-sizing: border-box;
+
+	display: flex;
+	flex-direction: column;
+
+	&.ok {
+		background-color: $okColor;
+	}
+
+	&.ko {
+		background-color: $errorColor;
+	}
+}
+
+#body {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-bottom: 1px solid #ddd;
+}
+
+#appVersion {
+	font-size: 0.7em;
+	opacity: 0.5;
+}
+
+.error {
+	background-color: rgba(255, 255, 255, 0.3);
+	// color: $errorColor;
+
+	word-wrap: break-word;
+
+	.path {
+		opacity: 0.7;
+	}
+}
+
+.bar {
+	overflow: hidden;
+
+	background-color: #f8f8f8;
+	display: flex;
+	border-top: solid 1px #eee;
+	border-bottom: solid 1px #ddd;
+
+	opacity: .5;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	.button {
+
+		flex: 0 0 auto;
+
+		border-left: solid 1px white;
+		padding: 5px 10px;
+
+		cursor: pointer;
+		color: #777;
+
+		span {
+			cursor: pointer;
+		}
+
+		&:hover {
+			color: #333;
+		}
+	}
+}
+
+.dataPath {
+	.path {
+		flex: 1 1 auto;
+
+		padding: 5px;
+
+		color: #333;
+		background-color: rgba(255, 255, 255, 0.4);
+
+		text-decoration: none;
+
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.browseButton {
+	}
+}
+
+.addressList {
+	overflow: hidden;
+	-webkit-transition: max-height 300ms ease-out;
+	transition: max-height 300ms ease-out;
+	max-height: 30px;
+
+	&:hover {
+		max-height: 150px;
+		// -webkit-transition: max-height 300ms ease-in;
+		// transition: max-height 500ms ease-in;
+	}
+
+	.addresses {
+		flex: 1 1 auto;
+	}
+
+
+	a.address {
+		display: block;
+		padding: 5px;
+
+
+		color: #333;
+		background-color: rgba(255, 255, 255, 0.4);
+
+		text-decoration: none;
+
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+#qrcode {
+	flex: 1 1 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	canvas{
+		border-radius: 5px;
+		box-shadow: 0 0 10px 2px rgba(black, .3);
+	}
+}
+
+.validationSuccess {
+	flex-grow: 1;
+	height: 100%;
+
+	display: flex;
+
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	padding: 10px;
+
+	img {
+		max-width: 100%;
+		border: solid 10px white;
+		border-radius: 20px;
+		background-color: white;
+	}
+}
+
+.button {
+	cursor: pointer;
+
+	.glyphicon {
+		cursor: pointer;
+	}
+}

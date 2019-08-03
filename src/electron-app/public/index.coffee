@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import './styles/style.scss'
 require 'typeface-ubuntu'
-import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-pro/css/all.css'
 
 basicTemplate = require './templates/basic.hbs'
 faTemplate = require './templates/fa.hbs'

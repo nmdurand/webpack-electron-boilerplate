@@ -1,0 +1,530 @@
+@import "_mixins";
+@import "_phones";
+
+
+@mixin stdScreen {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width:100%;
+}
+
+body{
+	@media screen and (min-width: 700px), screen and (min-height: 700px) {
+		font-size: 2.4em;
+	}
+
+	background-color:lightblue;
+	font-family:'Ubuntu';
+
+	.logout-modal, .login-modal, .keychange-modal, .qrcode-modal, .labelEditor-modal{
+		margin: auto;
+		margin-top: 10%;
+		text-align:center;
+		.modal-header .modal-title{
+			font-size:1.8em;
+		}
+		.modal-body{
+			background: lightgrey;
+		}
+		input{
+			text-align: center;
+		}
+	}
+	.qrcode-modal{
+		.modal-body{
+			border-bottom-right-radius: 6px;
+			border-bottom-left-radius: 6px;
+		}
+		.qrcodeWrapper{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.qrcode{
+				border: 20px solid white;
+			}
+		}
+		.serverAddress{
+			margin-top: 20px;
+			font-size: 1.5em;
+		}
+	}
+	.keychange-modal{
+		.modal-body{
+			border-bottom-right-radius: 6px;
+			border-bottom-left-radius: 6px;
+		}
+		.keySelector{
+			display: flex;
+			flex-wrap: wrap;
+			font-size: 2em;
+			.keyItem{
+				width: 21%;
+				height: 2em;
+				margin: 2%;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				border: 2px solid grey;
+				border-radius: 5px;
+				background-color: white;
+				&.original{
+					background-color: darkgrey;
+				}
+				&.selected{
+					background-color: limegreen;
+				}
+			}
+		}
+	}
+	.labelEditor-modal{
+		.modal-body{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			max-height: 500px;
+			#label-searchfield{
+				width: 200px;
+				margin-bottom: 5px;
+				.remove-query-icon{
+					display:none;
+				}
+				.search-icon{
+					display:initial;
+				}
+				&.query-present{
+					.remove-query-icon{
+						display:initial;
+					}
+					.search-icon{
+						display:none;
+					}
+				}
+			}
+			#labelSelector{
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				overflow-y: scroll;
+				.labelItem{
+					margin: 10px;
+					box-sizing: content-box;
+					padding: 0 10px;
+					background-color: lightgrey;
+					border: 2px solid grey;
+					border-radius: 5px;
+					cursor: pointer;
+					user-select: none;
+					&.queried{
+						border: 2px solid red !important;
+						color: red;
+					}
+					&.selected{
+						background-color: lightgreen !important;
+					}
+					&:hover{
+						border: 2px solid rgba(grey, .5);
+						background-color: rgba(white, .3);
+					}
+				}
+			}
+		}
+	}
+
+	#mainContainer{
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		overflow:hidden;
+		.app-layout{
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: flex;
+			flex-direction: column;
+		}
+		#main-content{
+			flex: 1 1 auto;
+			position: relative;
+		}
+
+
+		// On style tout d'un bloc dans la titleBar
+		// Ensuite on utilisera des classes à la racine pour décider quoi afficher
+		#titleBar{
+			width:100%;
+			z-index:10;
+			box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.37);
+			display:flex;
+			.header{
+				display: inline-flex;
+				width: 100%;
+				height: 50px;
+				justify-content: space-between;
+			}
+			.navbar-header .navbar-brand, .fa-arrow-left:before, .fa-bars:before{
+				color:white;
+			}
+			.fa-arrow-left{
+				font-size: 1.2em;
+				// margin-top: .35em;
+				padding: 11px 12px;
+				margin: 0;
+			}
+			button{
+				border-radius: 4px;
+				.fa-bars{
+					font-size: 1.9em;
+					line-height: 1.4em;
+				}
+			}
+			#header-backButton{
+				display: flex;
+				align-items: center;
+			}
+			#header-searchfield{
+				display:flex;
+				align-items:center;
+				margin: 0 20px;
+				.remove-query-icon{
+					display:none;
+				}
+				.search-icon{
+					display:initial;
+				}
+				&.query-present{
+					.remove-query-icon{
+						display:initial;
+					}
+					.search-icon{
+						display:none;
+					}
+				}
+				.songSearchfield{}
+				.input-group-addon{
+					padding-right: 20px;
+				}
+			}
+			#header-brand{
+				flex-grow: 1;
+			}
+			#header-labels{
+				flex-grow: 1;
+				display: flex;
+				align-items: center;
+				.editLabelsButton{
+					color: white;
+					cursor: pointer;
+					&:hover{
+						color: lightgreen;
+					}
+				}
+				.label{
+					font-size: .5em;
+					background-color: cornflowerblue;
+					margin-left: 5px;
+					padding: .3em .5em .3em;
+					cursor: pointer;
+					.labelIcon{
+						margin-left: 5px;
+						padding-left: 5px;
+						pointer-events: none;
+					}
+					&:hover{
+						background-color: salmon;
+					}
+				}
+			}
+			#header-controls{
+				display: flex;
+				align-items: center;
+				.controlItem{
+					display: flex;
+					padding: 0 8px;
+					color: white;
+					text-decoration: none;
+					outline: none;
+					cursor: pointer;
+					&.active{
+						color: coral;
+					}
+					&.login{
+						.logoutIcon{
+							display: none;
+						}
+						&.active{
+							.loginIcon{
+								display: none;
+							}
+							.logoutIcon{
+								display: initial;
+							}
+						}
+					}
+				}
+			}
+		}
+		#statusBar{
+			.statusWrapper{
+				width: 100%;
+				height: 50px;
+				top: 50px;
+				z-index: 9;
+				background-color: #f6e7ca;
+				justify-content: center;
+				align-items: center;
+				box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.37);
+				display: inline-flex;
+				cursor: pointer;
+				.statusDetails{
+					display: inline-flex;
+				}
+				.statusItem{
+					margin: 0 5px;
+				}
+			}
+		}
+
+		// Setting displayed elements in header (depending on mode and mainView)
+		&.master{
+			#titleBar{
+				#header-searchfield{}
+				#header-backButton{}
+				#header-brand{}
+			}
+		}
+
+		&.spectator{
+			#titleBar{
+				#header-searchfield{}
+				#header-backButton{}
+				#header-brand{}
+			}
+		}
+
+		&.song{
+			#titleBar{
+				#header-searchfield{
+					display:none;
+				}
+			}
+			#statusBar{
+				display: none;
+			}
+		}
+		&:not(.song){
+			#titleBar{
+				#header-controls{
+					.toggleChords, .keychange{
+						display: none;
+					}
+				}
+			}
+		}
+		&.songList{
+			#titleBar{
+				#header-backButton{
+					display:none;
+				}
+				#header-searchfield{
+					display:flex;
+				}
+				#header-brand{
+					display:none;
+				}
+			}
+		}
+		&:not(.songList){
+			#titleBar{
+				#header-labels{
+					display: none;
+				}
+			}
+		}
+		&.waiting{
+			#titleBar{
+				#header-backButton{
+					display:none;
+				}
+				#header-searchfield{
+					display:none;
+				}
+			}
+			#statusBar{
+				display: none;
+			}
+		}
+
+
+		// ============== Color themes
+		&.master{
+			#titleBar{
+				background-color: darkred;
+				border-color: darkred;
+			}
+		}
+		&.spectator{
+			#titleBar{
+				background-color: darkgreen;
+				border-color: darkgreen;
+			}
+		}
+
+		//  Do not display file errors in spectator mode
+		&.spectator{
+			.songListScreen{
+				.songDetails.error{
+					display: none;
+				}
+			}
+		}
+
+		.waitingScreen{
+			@include stdScreen;
+			background-image:url('images/karaokeBackground.png');
+			background-size:contain;
+			background-position:50%;
+			background-repeat:no-repeat;
+		}
+
+		.songListScreen{
+			@include stdScreen;
+			#titleBar{
+			}
+			@include scrollable;
+			flex: 1 1 auto;
+			margin-bottom:0;
+			.no-results{
+				width: 100%;
+				position: absolute;
+				top: 30%;
+				text-align: center;
+				font-size: 3em;
+				font-weight: bold;
+			}
+			.songDetails{
+				display: flex;
+				align-items: center;
+				flex-shrink: 0;
+				&.selected{
+					background-color: lightgrey;
+				}
+				&.error{
+					background-color: darksalmon;
+					pointer-events:none;
+				}
+				.key{
+					font-size: .8em;
+					background-color: darkcyan;
+					padding: 0 10px;
+					margin: 0 10px;
+					border-radius: 5px;
+					color: white;
+				}
+				.label{
+					font-size: .5em;
+					background-color: cornflowerblue;
+					margin-left: 5px;
+					padding: .3em .5em .3em;
+					cursor: pointer;
+					transform: rotate(0.01deg); // Has an effect on labels padding
+					transition: transform .2s ease;
+					.labelIcon{
+						margin-left: 5px;
+						padding-left: 5px;
+						pointer-events: none;
+					}
+					&:hover{
+						background-color: limegreen;
+						transform: rotate(-10deg);
+						transition: transform .2s ease;
+					}
+				}
+			}
+		}
+
+
+		.songScreen{
+			@include stdScreen;
+
+			.redLine{
+				position:fixed;
+				width:100%;
+				height:1px;
+				top:8em;
+				background-color:rgba(red,0.2);
+				pointer-events:none;
+			}
+
+			#songContainer{
+				@include scrollable;
+				flex: 1 1 auto;
+				.songDisplay{
+					padding-top:20%;
+					padding-bottom:80%;
+
+					.comment{
+						font-weight:bold;
+						padding:0 .5em;
+						font-size: 5vmin;
+						line-height: 2em;
+						opacity:.6;
+					}
+
+					.linebreak{
+						height:1em;
+					}
+
+					.lineContent:not(.comment){
+						white-space:pre-wrap;
+						padding:0 4em;
+						font-size: 2.5vmin;
+						line-height: 2.8em;
+						.chord{
+							font-size:1.3em;
+							white-space:nowrap;
+							display:inline-flex;
+							width:0;
+							position:relative;
+							bottom:1em;
+							font-weight:bold;
+							&.alignRight{
+								// flex-direction:row-reverse;
+								left:-1.5em;
+							}
+							&.small{
+								// .small is a bootstrap class - font size is being taken care of
+								bottom: 1.2em;
+							}
+						}
+					}
+
+					&:not(.noChords){
+						// Using monospace font when chords are displayed
+						font-family:monospace;
+						letter-spacing:  -1px;
+					}
+
+					&.noChords{
+						.lineContent:not(.comment){
+							padding:0 2em;
+							font-size: 5vmin;
+							line-height: 1.4em;
+							.chord{
+								display:none;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
