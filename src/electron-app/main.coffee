@@ -107,7 +107,7 @@ app.on 'ready', ->
 			slashes: true
 	)
 
-	mainWindow.webContents.openDevTools()
+	# mainWindow.webContents.openDevTools()
 
 
 	# Emitted when the window is closed.
