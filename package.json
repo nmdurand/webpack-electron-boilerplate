@@ -56,7 +56,6 @@
     "network": "^0.4.1",
     "os": "^0.1.1",
     "qrcode": "^1.4.1",
-    "qrcodejs": "https://github.com/happinov/qrcodejs.git#amd",
     "socket.io": "^2.2.0",
     "typeface-ubuntu": "0.0.65",
     "underscore": "^1.9.1"

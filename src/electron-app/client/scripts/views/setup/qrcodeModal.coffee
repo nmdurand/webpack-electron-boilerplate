@@ -36,9 +36,14 @@ class QRCodeModalView extends Marionette.View
 		Modal.hide @
 
 	displayQRCode: =>
-		@qrcode = new QRCode @ui.qrcode[0],
-			text: @serverUrl
-			correctLevel : QRCode.CorrectLevel.L
+		qrCodeOpts =
+			errorCorrectionLevel: 'L'
+			width: 400
 
+		QRCode.toCanvas @serverUrl, qrCodeOpts,
+			(err, canvas)=>
+				if err
+					throw err
+				@ui.qrcode.append canvas
 
 export default QRCodeModalView
