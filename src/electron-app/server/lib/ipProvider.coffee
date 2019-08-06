@@ -1,6 +1,8 @@
-ip = require 'ip'
+import ip from 'ip'
 
-module.exports =
-
+IpProvider =
 	getIp: ->
 		ip.address()
+
+
+export default IpProvider

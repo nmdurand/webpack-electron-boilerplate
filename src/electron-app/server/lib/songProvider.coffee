@@ -1,11 +1,11 @@
-_ = require 'lodash'
+import _ from 'lodash'
 
-debug = require('debug')('happi:karaoke:songprovider')
-StringUtils = require './string.coffee'
+import StringUtils from './string.coffee'
+import log4js from 'log4js'
 
-logger = require('log4js').getLogger 'songProvider'
+logger = log4js.getLogger 'songProvider'
 
-module.exports = (songs)->
+SongProvider = (songs)->
 
 	if _.isEmpty songs
 		throw new Error 'No songs provided.'
@@ -16,8 +16,7 @@ module.exports = (songs)->
 			song.searchTitle = StringUtils.normalize song.title
 			song.searchArtist = StringUtils.normalize song.artist
 
-			# debug 'Song:',song.title,song.id
-			debug 'Song:',song.title,'by',song.artist
+			logger.debug 'Song:',song.title,'by',song.artist
 		else
 			# Handling txt files containing errors (header issues)
 			song.id = StringUtils.normalize song.title
@@ -49,3 +48,6 @@ module.exports = (songs)->
 					songEssentials.fileError = true
 				list.push songEssentials
 			list
+
+
+export default SongProvider

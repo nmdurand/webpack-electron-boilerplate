@@ -1,6 +1,6 @@
-fs = require 'fs'
-_ = require 'lodash'
-path = require 'path'
+import fs from 'fs'
+import _ from 'lodash'
+import path from 'path'
 
 # SONG_FOLDER = '/../../../songs'
 CHORD_REGEX = /^([A-G][b#]?|%)([^\/]*)(\/([A-G][b#]?))?$/
@@ -213,7 +213,7 @@ translateSongData = (data)->
 	# console.log 'Translated Data:',result
 	result
 
-module.exports =
+SongParser =
 	parseFolder: (folder)->
 		new Promise((resolve,reject)->
 			fs.readdir folder, (err,fileList)->
@@ -249,3 +249,6 @@ module.exports =
 				songArray
 			)
 		)
+
+
+export default SongParser

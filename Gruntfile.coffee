@@ -13,22 +13,48 @@ module.exports = (grunt)->
 
 	packageInfo = require './package.json'
 
+	DIST_PATH = 'dist'
+	BUILD_PATH = 'build'
+
 	# Define the configuration for all the tasks
 	grunt.initConfig
 
 		packageInfo: packageInfo
 		electronVersion: packageInfo.devDependencies['electron']
 
+		clean:
+			dist: DIST_PATH
+			build: BUILD_PATH
+
 		webpack:
 
 			elMain:
-				mode: 'development'
+				# mode: 'development'
+				mode: 'production'
 				entry: './src/electron-app/main.coffee'
 				output:
 					filename: 'main.js'
-					path: path.resolve __dirname, 'dist'
-				target: 'electron-main'
-				externals: [ nodeExternals() ]
+					path: path.resolve __dirname, BUILD_PATH
+				# target: 'electron-main'
+				target: 'node'
+				externals: [
+					nodeExternals(
+						# whitelist: [ 'log4js', 'network']
+					)
+					# "network": "require('network')"
+
+				]
+				# externals: [
+				# 	nodeExternals(
+				# 		whitelist: [
+				# 			'log4js'
+				# 			'socket.io'
+				# 		])
+				# ]
+				# externals: [
+				# 	log4js: "require('log4js')"
+				# 	'socket.io': "require('socket.io')"
+				# ]
 				node:
 					__dirname: false,
 					__filename: false
@@ -46,11 +72,12 @@ module.exports = (grunt)->
 
 
 			elRenderer:
-				mode: 'development'
+				# mode: 'development'
+				mode: 'production'
 				entry: './src/electron-app/renderer/index.coffee'
 				output:
 					filename: 'renderer.js'
-					path: path.join __dirname, 'dist', 'renderer'
+					path: path.join __dirname, BUILD_PATH, 'renderer'
 				target: 'electron-renderer'
 				devtool: 'inline-source-map'
 				module:
@@ -94,29 +121,14 @@ module.exports = (grunt)->
 						template: "./src/electron-app/renderer/index.html"
 				]
 
-			server:
-				mode: 'development'
-				entry: './src/electron-app/server/express.coffee'
-				output:
-					filename: 'express.js'
-					path: path.resolve __dirname, 'dist'
-				target: 'node'
-				externals: [ nodeExternals() ]
-				node:
-					__dirname: false
-					__filename: false
-				module:
-					rules: [
-						test: /\.coffee$/
-						use: [ 'coffee-loader' ]
-					]
 
 			public:
-				mode: 'development'
+				# mode: 'development'
+				mode: 'production'
 				entry: './src/electron-app/client/main.coffee'
 				output:
 					filename: 'main.js'
-					path: path.resolve __dirname, 'dist', 'public'
+					path: path.resolve __dirname, BUILD_PATH, 'public'
 				target: 'electron-renderer'
 				devtool: 'inline-source-map'
 				module:
@@ -155,7 +167,7 @@ module.exports = (grunt)->
 									outputPath: 'images/'
 						]
 					]
-				externals: [ /^socket$/ ]
+				# externals: [ /^socket$/ ]
 				plugins: [
 					new HtmlWebpackPlugin
 						template: "./src/electron-app/client/index.html"
@@ -172,31 +184,49 @@ module.exports = (grunt)->
 
 
 		exec:
-			electron:
-				command: 'npx electron dist'
+			rebuildElectronModules:
+				command: 'npx electron-rebuild -v <%= electronVersion %> -f -e node_modules/electron'
 
-		# electron:
-		# 	options:
-		# 		'appBundleId': packageInfo.applicationId
-		# 		name: packageInfo.displayName
-		# 		dir: 'pkg'
-		# 		out: 'dist'
-		# 		electronVersion: '<%= electronVersion %>' # use same version as during dev.
-		# 		appVersion: packageInfo.version
-		# 		asar: true
-		# 		overwrite: true
-		# 		icon: 'images/icon'
-		# 		prune: true
-		# 	osx:
-		# 		options:
-		# 			platform: 'darwin'
-		# 			arch: 'x64'
+			electron:
+				command: "npx electron #{BUILD_PATH}"
+
+		electron:
+			options:
+				'appBundleId': packageInfo.applicationId
+				name: packageInfo.displayName
+				dir: BUILD_PATH
+				out: DIST_PATH
+				electronVersion: '<%= electronVersion %>' # use same version as during dev.
+				appVersion: packageInfo.version
+				asar: false
+				# asar: true
+				overwrite: true
+				icon: 'images/icon'
+				prune: true
+			osx:
+				options:
+					platform: 'darwin'
+					arch: 'x64'
 
 
 	grunt.registerTask 'elserve', [
+		'clean:build'
+
 		'webpack:elMain'
 		'webpack:elRenderer'
-		'webpack:server'
 		'webpack:public'
+
 		'exec:electron'
+	]
+
+	grunt.registerTask 'dist', [
+		'clean'
+
+		'exec:rebuildElectronModules'
+
+		'webpack:elMain'
+		'webpack:elRenderer'
+		'webpack:public'
+
+		'electron'
 	]

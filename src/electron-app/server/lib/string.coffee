@@ -1,4 +1,4 @@
-module.exports = StringUtils =
+StringUtils =
 
 	removeAccents: (source)->
 		result = source
@@ -30,3 +30,6 @@ module.exports = StringUtils =
 
 	regexEscape: (source)->
 		source.replace /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'
+
+
+export default StringUtils

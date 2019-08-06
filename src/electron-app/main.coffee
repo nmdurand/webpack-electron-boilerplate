@@ -5,16 +5,15 @@ import network from 'network'
 import _ from 'lodash'
 import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 
-win = null
-
 ADDRESS_REFRESH_DELAY = 3*1000 # ms
 
 
-# Set up server
-# require './server/express.coffee'
-
-# Initialize electron-reload
-require('electron-reload') __dirname
+# # Initialize electron-reload
+if process.env.NODE_ENV is 'development'
+	console.log '> Running in development mode'
+else if process.env.NODE_ENV is 'production'
+	console.log '> Running in production mode'
+# 	require('electron-reload') __dirname
 
 
 userConfigFolder = path.join app.getPath('documents'), 'HappiKaraoke'
@@ -32,9 +31,9 @@ userConfig = JSON.parse fs.readFileSync(userConfigFile)
 
 console.log 'Running electron with config:', userConfig
 
-# serverPath = path.join __dirname, './server/express'
-# console.log path.resolve serverPath
-serverModule = require('./server/express.coffee')(app.getAppPath(), userConfigFolder, userConfig, userConfigFile)
+# Set up server
+import ExpressServer from './server/express.coffee'
+serverModule = ExpressServer(app.getAppPath(), userConfigFolder, userConfig, userConfigFile)
 
 # Keep a global reference of the window object, if you don't, the window will
 # be closed automatically when the JavaScript object is garbage collected.

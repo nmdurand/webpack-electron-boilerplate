@@ -1,21 +1,19 @@
-express = require 'express'
-http = require 'http'
-path = require 'path'
-EventEmitter = require 'events'
-_ = require 'lodash'
-fs = require 'fs'
-json2csv = require 'json2csv'
-DataProvider = require './karaoke/dataProvider.coffee'
-KaraokeState = require './karaoke/state.coffee'
-Connection = require './karaoke/connection.coffee'
+import express from 'express'
+import http from 'http'
+import path from 'path'
+import EventEmitter from 'events'
+import _ from 'lodash'
+import fs from 'fs'
+import json2csv from 'json2csv'
+import DataProvider from './karaoke/dataProvider.coffee'
+import KaraokeState from './karaoke/state.coffee'
+import Connection from './karaoke/connection.coffee'
 
-debug = require('debug')('happi:karaoke:express')
+import mkdirp from 'mkdirp'
+import log4js from 'log4js'
 
-mkdirp = require 'mkdirp'
-log4js = require 'log4js'
-
-songParser = require './lib/songParser.coffee'
-ipProvider = require './lib/ipProvider.coffee'
+import songParser from './lib/songParser.coffee'
+import ipProvider from './lib/ipProvider.coffee'
 
 createKaraokeContext = (dataPath)->
 	logger = log4js.getLogger 'gameContext'
@@ -28,7 +26,7 @@ createKaraokeContext = (dataPath)->
 	context
 
 
-module.exports = (appRoot, cwd, config, configPath)->
+ExpressServer = (appRoot, cwd, config, configPath)->
 
 	serverModule = {}
 	context = null
@@ -74,7 +72,6 @@ module.exports = (appRoot, cwd, config, configPath)->
 		songList = _.sortBy songList, ['artist', 'title']
 
 		if not fs.existsSync destPath
-			mkdirp = require 'mkdirp'
 			mkdirp.sync destPath
 
 		# Use the name of the data source folder to build the csv export file name
@@ -152,3 +149,6 @@ module.exports = (appRoot, cwd, config, configPath)->
 		updateDataPath: updateDataPath
 		context: context
 		exportCSV: exportCSV
+
+
+export default ExpressServer
