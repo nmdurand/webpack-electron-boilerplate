@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import ip from 'ip'
 
 
 PORT = 3000
@@ -16,5 +17,6 @@ expressServer.get '/', (req, res) ->
 
 expressServer.listen PORT, ->
 	console.log "Example app listening on port #{PORT}!"
+	console.log "Local ip:", ip.address()
 
 export default expressServer

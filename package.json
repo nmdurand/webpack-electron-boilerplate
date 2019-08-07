@@ -43,6 +43,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.0",
     "express": "^4.17.1",
+    "ip": "^1.1.5",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "typeface-ubuntu": "0.0.65"
