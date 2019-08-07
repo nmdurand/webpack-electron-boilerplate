@@ -36,26 +36,7 @@ module.exports = (grunt)->
 				output:
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH
-				# target: 'electron-main'
-				target: 'node'
-				externals: [
-					nodeExternals(
-						# whitelist: [ 'log4js', 'network']
-					)
-					# "network": "require('network')"
-
-				]
-				# externals: [
-				# 	nodeExternals(
-				# 		whitelist: [
-				# 			'log4js'
-				# 			'socket.io'
-				# 		])
-				# ]
-				# externals: [
-				# 	log4js: "require('log4js')"
-				# 	'socket.io': "require('socket.io')"
-				# ]
+				target: 'electron-main'
 				node:
 					__dirname: false,
 					__filename: false

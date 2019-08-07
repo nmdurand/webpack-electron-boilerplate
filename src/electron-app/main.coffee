@@ -5,13 +5,15 @@ import { app, BrowserWindow } from 'electron'
 mainWindow = null
 
 # Set up server
-import server from './server/express.coffee'
+import './server/express.coffee'
 
 # Initialize electron-reload
 # require('electron-reload') __dirname
 
 app.on 'ready', ->
-	mainWindow = new BrowserWindow()
+	mainWindow = new BrowserWindow
+		webPreferences:
+			nodeIntegration: true
 
 	mainWindow.loadURL(
 		url.format
