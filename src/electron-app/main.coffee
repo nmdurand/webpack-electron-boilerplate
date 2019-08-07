@@ -2,25 +2,25 @@ import path from 'path'
 import url from 'url'
 import { app, BrowserWindow } from 'electron'
 
-win = null
+mainWindow = null
 
 # Set up server
-require './server/express.coffee'
+import server from './server/express.coffee'
 
 # Initialize electron-reload
-require('electron-reload') __dirname
+# require('electron-reload') __dirname
 
 app.on 'ready', ->
-	win = new BrowserWindow()
+	mainWindow = new BrowserWindow()
 
-	win.loadURL(
+	mainWindow.loadURL(
 		url.format
 			pathname: path.join __dirname, "./renderer/index.html"
 			protocol: "file:"
 			slashes: true
 	)
 
-	win.show()
+	mainWindow.show()
 
-	win.on 'closed', ->
+	mainWindow.on 'closed', ->
 		win = null

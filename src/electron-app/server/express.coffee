@@ -1,18 +1,20 @@
-express = require 'express'
-path = require 'path'
+import express from 'express'
+import path from 'path'
+
+
 PORT = 3000
 
 
-app = express()
+expressServer = express()
 DIST_DIR = path.join __dirname, './public'
 HTML_FILE = path.join DIST_DIR, 'index.html'
-app.use express.static(DIST_DIR)
+expressServer.use express.static(DIST_DIR)
 
-app.get '/', (req, res) ->
+expressServer.get '/', (req, res) ->
 	# res.send 'Tu peux pas test!'
 	res.sendFile HTML_FILE
 
-app.listen PORT, ->
+expressServer.listen PORT, ->
 	console.log "Example app listening on port #{PORT}!"
 
-module.exports = app
+export default expressServer

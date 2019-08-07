@@ -9,7 +9,7 @@ faTemplate = require './templates/fa.hbs'
 component = ->
 	element = document.createElement 'div'
 
-	element.innerHTML = _.join ['Hello', 'Webpack,', 'Coffeescript,', 'Sass', 'and Handlebars!'], ' '
+	element.innerHTML = _.join ['Hello', 'Webpack,', 'Grunt,','Coffeescript,', 'Express,', 'Sass', 'and Handlebars!'], ' '
 	element.classList.add 'bigBlue'
 
 	element
