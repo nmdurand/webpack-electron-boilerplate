@@ -1,18 +1,19 @@
 import _ from 'lodash'
 
-import socket from 'socket.io'
+import io from 'socket.io'
 import ipProvider from '../lib/ipProvider.coffee'
 
-import log4js from 'log4js'
-logger = log4js.getLogger 'socket'
+# import log4js from 'log4js'
+# logger = log4js.getLogger 'socket'
 import internalConfig from '../config/main.coffee'
 
 
 class Connection
 
-	constructor: (app, context)->
-		logger.info 'Initializing socket.io...'
-		@io = socket.listen app
+	constructor: (server, context)->
+		# logger.info 'Initializing socket.io...'
+		console.log 'Initializing socket.io...'
+		@io = io.listen server
 
 		{@dataProvider, @state} = context
 
@@ -105,7 +106,8 @@ class Connection
 				clientSocket.broadcast.to('spectator').emit 'displayWaitingScreen'
 
 
-		logger.info 'Socket.io routes initialized.'
+		# logger.info 'Socket.io routes initialized.'
+		console.log 'Socket.io routes initialized.'
 
 
 	emit: (args...)=>

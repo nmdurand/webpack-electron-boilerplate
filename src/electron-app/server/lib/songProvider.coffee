@@ -1,9 +1,9 @@
 import _ from 'lodash'
 
 import StringUtils from './string.coffee'
-import log4js from 'log4js'
+# import log4js from 'log4js'
 
-logger = log4js.getLogger 'songProvider'
+# logger = log4js.getLogger 'songProvider'
 
 SongProvider = (songs)->
 
@@ -16,7 +16,8 @@ SongProvider = (songs)->
 			song.searchTitle = StringUtils.normalize song.title
 			song.searchArtist = StringUtils.normalize song.artist
 
-			logger.debug 'Song:',song.title,'by',song.artist
+			# logger.debug 'Song:',song.title,'by',song.artist
+			console.log 'Song:',song.title,'by',song.artist
 		else
 			# Handling txt files containing errors (header issues)
 			song.id = StringUtils.normalize song.title

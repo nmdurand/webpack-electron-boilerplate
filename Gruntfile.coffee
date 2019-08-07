@@ -5,7 +5,7 @@ module.exports = (grunt)->
 	require('load-grunt-tasks')(grunt)
 
 	path = require 'path'
-	nodeExternals = require 'webpack-node-externals'
+	# nodeExternals = require 'webpack-node-externals'
 	CopyPlugin = require 'copy-webpack-plugin'
 	HtmlWebpackPlugin = require 'html-webpack-plugin'
 	webpack = require 'webpack'
@@ -35,25 +35,17 @@ module.exports = (grunt)->
 				output:
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH
-				# target: 'electron-main'
-				target: 'node'
+				target: 'electron-main'
 				externals: [
-					nodeExternals(
-						# whitelist: [ 'log4js', 'network']
-					)
-					# "network": "require('network')"
-
+					uws: 'uws'
 				]
+				devtool: 'inline-source-map'
 				# externals: [
-				# 	nodeExternals(
-				# 		whitelist: [
-				# 			'log4js'
-				# 			'socket.io'
-				# 		])
-				# ]
-				# externals: [
-				# 	log4js: "require('log4js')"
-				# 	'socket.io': "require('socket.io')"
+				# 	ip: "require('ip')",
+				# 	json2csv: "require('json2csv')",
+				# 	log4js: "require('log4js')",
+				# 	'socket.io': "require('socket.io')",
+				# 	network: "require('network')"
 				# ]
 				node:
 					__dirname: false,
@@ -79,6 +71,13 @@ module.exports = (grunt)->
 					filename: 'renderer.js'
 					path: path.join __dirname, BUILD_PATH, 'renderer'
 				target: 'electron-renderer'
+				# externals: [
+				# 	'@fortawesome/fontawesome-pro/css/all.css': "require('@fortawesome/fontawesome-pro/css/all.css')",
+				# 	'bootstrap/dist/css/bootstrap.css': "require('bootstrap/dist/css/bootstrap.css')",
+				# 	'bootstrap/dist/js/bootstrap.min.js': "require('bootstrap/dist/js/bootstrap.min.js')",
+				# 	ip: "require('ip')",
+				# 	qrcode: "require('qrcode')"
+				# ]
 				devtool: 'inline-source-map'
 				module:
 					rules: [
@@ -129,7 +128,9 @@ module.exports = (grunt)->
 				output:
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH, 'public'
-				target: 'electron-renderer'
+				# Target 'web' is default
+				# target: 'web'
+				externals: [ /^socket$/ ]
 				devtool: 'inline-source-map'
 				module:
 					rules: [
@@ -167,7 +168,6 @@ module.exports = (grunt)->
 									outputPath: 'images/'
 						]
 					]
-				# externals: [ /^socket$/ ]
 				plugins: [
 					new HtmlWebpackPlugin
 						template: "./src/electron-app/client/index.html"
@@ -194,8 +194,8 @@ module.exports = (grunt)->
 			options:
 				'appBundleId': packageInfo.applicationId
 				name: packageInfo.displayName
-				dir: BUILD_PATH
-				out: DIST_PATH
+				dir: path.resolve __dirname, BUILD_PATH
+				out: path.resolve __dirname, DIST_PATH
 				electronVersion: '<%= electronVersion %>' # use same version as during dev.
 				appVersion: packageInfo.version
 				asar: false
@@ -214,7 +214,7 @@ module.exports = (grunt)->
 
 		'webpack:elMain'
 		'webpack:elRenderer'
-		'webpack:public'
+		# 'webpack:public'
 
 		'exec:electron'
 	]
@@ -226,7 +226,7 @@ module.exports = (grunt)->
 
 		'webpack:elMain'
 		'webpack:elRenderer'
-		'webpack:public'
+		# 'webpack:public'
 
 		'electron'
 	]

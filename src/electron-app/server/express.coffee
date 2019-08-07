@@ -10,13 +10,11 @@ import KaraokeState from './karaoke/state.coffee'
 import Connection from './karaoke/connection.coffee'
 
 import mkdirp from 'mkdirp'
-import log4js from 'log4js'
+# import log4js from 'log4js'
 
-import songParser from './lib/songParser.coffee'
-import ipProvider from './lib/ipProvider.coffee'
 
 createKaraokeContext = (dataPath)->
-	logger = log4js.getLogger 'gameContext'
+	# logger = log4js.getLogger 'gameContext'
 
 	context = new EventEmitter
 
@@ -36,9 +34,9 @@ ExpressServer = (appRoot, cwd, config, configPath)->
 
 	mkdirp.sync 'logs'
 
-	LOG4JS_CONFIG = require './config/log4js.json'
-	#log4js.setGlobalLogLevel 'DEBUG'
-	log4js.configure LOG4JS_CONFIG
+	# LOG4JS_CONFIG = require './config/log4js.json'
+	# #log4js.setGlobalLogLevel 'DEBUG'
+	# log4js.configure LOG4JS_CONFIG
 
 	processContentsPath = (contentsPath)->
 		if not contentsPath.match /^\//
@@ -109,17 +107,19 @@ ExpressServer = (appRoot, cwd, config, configPath)->
 		app = express()
 		server = http.createServer app
 
-		logger = log4js.getLogger 'express'
+		# logger = log4js.getLogger 'express'
 		# console.log 'Folders...', process.env.HOME
 
 
 		context = createKaraokeContext contentsPath
 		context.dataProvider.on 'initialized', ->
-			logger.info 'Context initialized, setting up socket handling.'
+			# logger.info 'Context initialized, setting up socket handling.'
+			console.log 'Context initialized, setting up socket handling.'
 			context.connection = new Connection server,context
 
 		context.dataProvider.on 'reset', ->
-			logger.info 'Dataprovider reset, broadcasting reset songlist message.'
+			# logger.info 'Dataprovider reset, broadcasting reset songlist message.'
+			console.log 'Dataprovider reset, broadcasting reset songlist message.'
 			context.state.resetState()
 			context.connection.emit 'resetState'
 
@@ -145,6 +145,7 @@ ExpressServer = (appRoot, cwd, config, configPath)->
 			console.log "App listening on port #{config.port}!"
 
 
+	# Return serverModule
 	serverModule =
 		updateDataPath: updateDataPath
 		context: context

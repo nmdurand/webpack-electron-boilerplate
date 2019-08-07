@@ -1,19 +1,21 @@
 import _ from 'lodash'
 import events from 'events'
-import log4js from 'log4js'
+# import log4js from 'log4js'
 
-logger = log4js.getLogger 'state'
+# logger = log4js.getLogger 'state'
 
 class State extends events.EventEmitter
 
 	constructor: ->
 		super()
-		logger.info "Creating karaoke server state."
+		# logger.info "Creating karaoke server state."
+		console.log "Creating karaoke server state."
 
 		@resetState()
 
 	resetState: ->
-		logger.info 'Resetting karaoke server state.'
+		# logger.info 'Resetting karaoke server state.'
+		console.log 'Resetting karaoke server state.'
 		@setState
 			songId: ''
 			lineFocus: 0
@@ -26,7 +28,8 @@ class State extends events.EventEmitter
 
 	setState: (state, silent)->
 		unless state?
-			logger.debug 'Ignoring null or empty state.'
+			# logger.debug 'Ignoring null or empty state.'
+			console.log 'Ignoring null or empty state.'
 			return
 
 		@setCurrentSongId(state.songId, true) if state?.songId?

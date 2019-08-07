@@ -2,9 +2,9 @@ import EventEmitter from 'events'
 import fs from 'fs'
 import songParser from '../lib/songParser.coffee'
 import songProvider from '../lib/songProvider.coffee'
-import log4js from 'log4js'
+# import log4js from 'log4js'
 
-logger = log4js.getLogger 'dataProvider'
+# logger = log4js.getLogger 'dataProvider'
 
 isDirectorySync = (path)->
 	fs.existsSync(path) and fs.statSync(path).isDirectory()
@@ -21,14 +21,16 @@ class DataProvider extends EventEmitter
 		unless isDirectorySync @dataPath
 			throw new Error "Invalid data path: #{@dataPath}"
 
-		logger.info 'Loading game data.'
+		# logger.info 'Loading game data.'
+		console.log 'Loading game data.'
 
 		@setSongProvider().then =>
 			@emit 'initialized'
 
 	setSongProvider: =>
 		@parseDataFolder().then((parsedSongs)=>
-			logger.info 'Finished parsing Data folder'
+			# logger.info 'Finished parsing Data folder'
+			console.log 'Finished parsing Data folder'
 			@songProvider = songProvider parsedSongs
 		).catch((err)->
 			console.error 'Error parsing songs:',err.stack
@@ -37,7 +39,8 @@ class DataProvider extends EventEmitter
 
 	parseDataFolder: =>
 		songParser.parseFolder(@dataPath).then((parsedSongs)->
-			logger.debug 'Song count found:',parsedSongs.length
+			# logger.debug 'Song count found:',parsedSongs.length
+			console.log 'Song count found:',parsedSongs.length
 
 			parsedSongs
 		).catch (err)->

@@ -5,7 +5,10 @@ class ConnectionController extends Marionette.Object
 
 	initialize: ->
 		console.log 'Initializing Connection...'
-		@socket = require('socket.io-client')()
+		# @socket = require('socket.io-client')()
+		# import io from '/socket.io/socket.io.js'
+		# import io from 'socket.io-client'
+		@socket = io.connect()
 		@registerEvents [
 			'focusOnLine'
 			'displaySong'
