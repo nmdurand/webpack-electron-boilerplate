@@ -46,6 +46,8 @@
     "ip": "^1.1.5",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
     "typeface-ubuntu": "0.0.65"
   }
 }

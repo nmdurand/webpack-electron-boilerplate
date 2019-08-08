@@ -6,10 +6,11 @@ module.exports = (grunt)->
 	require('load-grunt-tasks')(grunt)
 
 	path = require 'path'
+
 	nodeExternals = require 'webpack-node-externals'
 	CopyPlugin = require 'copy-webpack-plugin'
 	HtmlWebpackPlugin = require 'html-webpack-plugin'
-	webpack = require 'webpack'
+	# webpack = require 'webpack'
 
 
 	packageInfo = require './package.json'
@@ -37,6 +38,7 @@ module.exports = (grunt)->
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH
 				target: 'electron-main'
+				externals: ['uws']
 				node:
 					__dirname: false,
 					__filename: false
@@ -51,7 +53,6 @@ module.exports = (grunt)->
 						to: './package.json'
 					])
 				]
-
 
 			elRenderer:
 				# mode: 'development'
@@ -111,7 +112,8 @@ module.exports = (grunt)->
 				output:
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH, 'public'
-				target: 'electron-renderer'
+				# default target:
+				# target: 'web'
 				devtool: 'inline-source-map'
 				module:
 					rules: [
