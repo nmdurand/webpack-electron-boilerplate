@@ -5,14 +5,6 @@
   "main": "main.js",
   "description": "",
   "private": true,
-  "scripts": {
-    "clean": "rm -rf dist",
-    "serve": "npm run clean && webpack --config webpack.serve.config.js && node dist/express.js",
-    "dev": "npm run clean && webpack",
-    "prod": "npm run clean && webpack -p",
-    "electron": "electron dist",
-    "elserve": "npm run clean && webpack && npm run electron & webpack --watch"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
