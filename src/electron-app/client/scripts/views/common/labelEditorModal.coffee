@@ -71,7 +71,7 @@ class LabelEditorModalView extends Marionette.CompositeView
 		@focusOnSearchfield()
 
 	@show: (options)->
-		modalView = new LabelEditorModal options
+		modalView = new LabelEditorModalView options
 
 		modalView.on 'submit', options.selectionCallback
 
