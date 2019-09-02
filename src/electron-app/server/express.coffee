@@ -68,6 +68,8 @@ ExpressServer = (appRoot, cwd, config, configPath)->
 		# Exclude songs with fileErrors ; sort by artist and title
 		songList = _.reject songList, (song)-> song.fileError
 		songList = _.sortBy songList, ['artist', 'title']
+		songList = _.forEach songList, (song)->
+			song.labelsStr = song.labels.join ',  '
 
 		if not fs.existsSync destPath
 			mkdirp.sync destPath
@@ -91,6 +93,9 @@ ExpressServer = (appRoot, cwd, config, configPath)->
 		,
 			label: 'KEY'
 			value: 'key'
+		,
+			label: 'TAGS'
+			value: 'labelsStr'
 		]
 		parser = new Parser {fields}
 		csvData = parser.parse songList
