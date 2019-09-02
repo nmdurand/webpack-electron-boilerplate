@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@fortawesome/fontawesome-pro": "^5.10.0",
     "coffee-loader": "^0.9.0",
     "coffeescript": "^2.4.1",
     "copy-webpack-plugin": "^5.0.4",
@@ -34,6 +33,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-pro": "^5.10.0",
     "backbone": "^1.4.0",
     "backbone.marionette": "^3.4.4",
     "bootstrap": "^3.4.1",

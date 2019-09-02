@@ -36,17 +36,8 @@ module.exports = (grunt)->
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH
 				target: 'electron-main'
-				externals: [
-					uws: 'uws'
-				]
+				externals: [ 'uws' ]
 				devtool: 'inline-source-map'
-				# externals: [
-				# 	ip: "require('ip')",
-				# 	json2csv: "require('json2csv')",
-				# 	log4js: "require('log4js')",
-				# 	'socket.io': "require('socket.io')",
-				# 	network: "require('network')"
-				# ]
 				node:
 					__dirname: false,
 					__filename: false
