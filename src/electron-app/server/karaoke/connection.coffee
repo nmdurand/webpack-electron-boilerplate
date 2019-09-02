@@ -13,7 +13,8 @@ class Connection
 	constructor: (server, context)->
 		# logger.info 'Initializing socket.io...'
 		console.log 'Initializing socket.io...'
-		@io = io.listen server
+		@io = io server,
+			serveClient: false
 
 		{@dataProvider, @state} = context
 

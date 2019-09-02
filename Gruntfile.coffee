@@ -71,13 +71,6 @@ module.exports = (grunt)->
 					filename: 'renderer.js'
 					path: path.join __dirname, BUILD_PATH, 'renderer'
 				target: 'electron-renderer'
-				# externals: [
-				# 	'@fortawesome/fontawesome-pro/css/all.css': "require('@fortawesome/fontawesome-pro/css/all.css')",
-				# 	'bootstrap/dist/css/bootstrap.css': "require('bootstrap/dist/css/bootstrap.css')",
-				# 	'bootstrap/dist/js/bootstrap.min.js': "require('bootstrap/dist/js/bootstrap.min.js')",
-				# 	ip: "require('ip')",
-				# 	qrcode: "require('qrcode')"
-				# ]
 				devtool: 'inline-source-map'
 				module:
 					rules: [
@@ -128,9 +121,7 @@ module.exports = (grunt)->
 				output:
 					filename: 'main.js'
 					path: path.resolve __dirname, BUILD_PATH, 'public'
-				# Target 'web' is default
-				# target: 'web'
-				externals: [ /^socket$/ ]
+				target: 'electron-renderer'
 				devtool: 'inline-source-map'
 				module:
 					rules: [
@@ -210,11 +201,11 @@ module.exports = (grunt)->
 
 
 	grunt.registerTask 'elserve', [
-		'clean:build'
+		'clean'
 
 		'webpack:elMain'
 		'webpack:elRenderer'
-		# 'webpack:public'
+		'webpack:public'
 
 		'exec:electron'
 	]
@@ -226,7 +217,7 @@ module.exports = (grunt)->
 
 		'webpack:elMain'
 		'webpack:elRenderer'
-		# 'webpack:public'
+		'webpack:public'
 
 		'electron'
 	]

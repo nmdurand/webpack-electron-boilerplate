@@ -1,14 +1,12 @@
 import _ from 'underscore'
 import Marionette from 'backbone.marionette'
+import io from 'socket.io-client'
 
 class ConnectionController extends Marionette.Object
 
 	initialize: ->
 		console.log 'Initializing Connection...'
-		# @socket = require('socket.io-client')()
-		# import io from '/socket.io/socket.io.js'
-		# import io from 'socket.io-client'
-		@socket = io.connect()
+		@socket = io()
 		@registerEvents [
 			'focusOnLine'
 			'displaySong'
