@@ -5,7 +5,6 @@ module.exports = (grunt)->
 	require('load-grunt-tasks')(grunt)
 
 	path = require 'path'
-	# nodeExternals = require 'webpack-node-externals'
 	CopyPlugin = require 'copy-webpack-plugin'
 	HtmlWebpackPlugin = require 'html-webpack-plugin'
 	webpack = require 'webpack'
@@ -180,8 +179,7 @@ module.exports = (grunt)->
 				out: path.resolve __dirname, DIST_PATH
 				electronVersion: '<%= electronVersion %>' # use same version as during dev.
 				appVersion: packageInfo.version
-				asar: false
-				# asar: true
+				asar: true
 				overwrite: true
 				icon: 'images/icon'
 				prune: true
