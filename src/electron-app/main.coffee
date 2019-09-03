@@ -5,7 +5,10 @@ import { app, BrowserWindow } from 'electron'
 mainWindow = null
 
 # Set up server
-import './server/express.coffee'
+# import './server/express.coffee'
+
+# Set up nightmarejs
+import './server/nightmare.coffee'
 
 # Initialize electron-reload
 # require('electron-reload') __dirname
