@@ -14,19 +14,19 @@ movieProvider.getTop1000MoviesData().then (data)->
 # Initialize electron-reload
 # require('electron-reload') __dirname
 
-	app.on 'ready', ->
-		mainWindow = new BrowserWindow
-			webPreferences:
-				nodeIntegration: true
+app.on 'ready', ->
+	mainWindow = new BrowserWindow
+		webPreferences:
+			nodeIntegration: true
 
-		mainWindow.loadURL(
-			url.format
-				pathname: path.join __dirname, "./renderer/index.html"
-				protocol: "file:"
-				slashes: true
-		)
+	mainWindow.loadURL(
+		url.format
+			pathname: path.join __dirname, "./renderer/index.html"
+			protocol: "file:"
+			slashes: true
+	)
 
-		mainWindow.show()
+	mainWindow.show()
 
-		mainWindow.on 'closed', ->
-			win = null
+	mainWindow.on 'closed', ->
+		win = null
