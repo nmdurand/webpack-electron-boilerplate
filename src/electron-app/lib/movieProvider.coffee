@@ -18,11 +18,14 @@ getTop1000MoviesData = ->
 		console.log '> Navigating to url.'
 		partialPATH = IMDB_TOP1000_PATH + "&start=#{i*50 + 1}"
 		await page.goto(partialPATH)
+		await page.addScriptTag
+			# path: require.resolve('jquery')
+			content: $
 		console.log '> Evaluating scraping function in page context.'
-		dataSlice = await page.evaluate =>
+		dataSlice = await page.evaluate ->
 			console.log 'TEST', $('.lister-item-content')
 			try
-				$('.lister-item-content').each ->
+				$('.lister-item-content').each =>
 					console.log '> Yo', this
 					path = $(this).find('.lister-item-header a').attr('href')
 					title = $(this).find('.lister-item-header a').text()
