@@ -15,6 +15,85 @@ if expectedNodeVersion and not semver.satisfies currentNodeVersion,expectedNodeV
 	console.error "Invalid node version. Expected: #{expectedNodeVersion} found: #{currentNodeVersion}".red
 	process.exit 1
 
+adjustConfig = (webpackConfig, options={})->
+	config = Object.assign {}, webpackConfig
+	if options.devMode
+		config.mode = 'development'
+		config.devtool = 'inline-source-map'
+	else
+		config.mode = 'production'
+		delete config.devtool
+
+	config
+
+webpackConfig =
+	main:
+		context: path.join __dirname,'src/main'
+		entry: './main.coffee'
+		output:
+			filename: 'main.js'
+			path: path.resolve __dirname, '<%= paths.build %>'
+		target: 'electron-main'
+		externals: [nodeExternals()]
+		node:
+			__dirname: false,
+			__filename: false
+		module:
+			rules: [
+				test: /\.coffee$/,
+				loader: 'coffee-loader'
+			]
+		plugins:[
+			new CopyPlugin([
+				from: path.join __dirname,'package.json'
+			])
+		]
+
+	renderer:
+		context: path.join __dirname,'src/renderer'
+		entry: './scripts/main.coffee'
+		output:
+			filename: 'renderer.js'
+			path: path.join __dirname, '<%= paths.build %>', 'renderer'
+		target: 'electron-renderer'
+		module:
+			rules: [
+				test: /\.s?css$/
+				use: [
+					'style-loader',
+					'css-loader',
+					'sass-loader'
+				]
+			,
+				test: /\.coffee$/
+				use: [ 'coffee-loader' ]
+			,
+				test: /\.hbs$/
+				use: [ 'handlebars-loader' ]
+			,
+				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+				use: [
+						loader: 'file-loader'
+						options:
+							name: '[name].[ext]'
+							outputPath: 'fonts/'
+				]
+			,
+				test: /\.(png|svg|jpg|gif)$/
+				use: [
+						loader: 'file-loader'
+						options:
+							outputPath: 'images/'
+				]
+			]
+		plugins: [
+			new HtmlWebpackPlugin
+				template: 'index.html'
+		]
+		resolve:
+			extensions: ['.js','.coffee','.hbs']
+			modules: ['scripts','node_modules']
+
 module.exports = (grunt)->
 	# Load grunt tasks automatically
 	require('load-grunt-tasks')(grunt)
@@ -35,78 +114,15 @@ module.exports = (grunt)->
 			build: '<%= paths.build %>'
 
 		webpack:
+			mainDev: adjustConfig webpackConfig.main,
+				devMode: true
+			rendererDev: adjustConfig webpackConfig.renderer,
+				devMode: true
 
-			elMain:
-				mode: 'development'
-				# mode: 'production'
-				context: path.join __dirname,'src/main'
-				entry: './main.coffee'
-				output:
-					filename: 'main.js'
-					path: path.resolve __dirname, '<%= paths.build %>'
-				target: 'electron-main'
-				externals: [nodeExternals()]
-				node:
-					__dirname: false,
-					__filename: false
-				module:
-					rules: [
-						test: /\.coffee$/,
-						loader: 'coffee-loader'
-					]
-				plugins:[
-					new CopyPlugin([
-						from: path.join __dirname,'package.json'
-					])
-				]
-
-			elRenderer:
-				mode: 'development'
-				# mode: 'production'
-				context: path.join __dirname,'src/renderer'
-				entry: './scripts/main.coffee'
-				output:
-					filename: 'renderer.js'
-					path: path.join __dirname, '<%= paths.build %>', 'renderer'
-				target: 'electron-renderer'
-				devtool: 'inline-source-map'
-				module:
-					rules: [
-						test: /\.s?css$/
-						use: [
-							'style-loader',
-							'css-loader',
-							'sass-loader'
-						]
-					,
-						test: /\.coffee$/
-						use: [ 'coffee-loader' ]
-					,
-						test: /\.hbs$/
-						use: [ 'handlebars-loader' ]
-					,
-						test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-						use: [
-								loader: 'file-loader'
-								options:
-									name: '[name].[ext]'
-									outputPath: 'fonts/'
-						]
-					,
-						test: /\.(png|svg|jpg|gif)$/
-						use: [
-								loader: 'file-loader'
-								options:
-									outputPath: 'images/'
-						]
-					]
-				plugins: [
-					new HtmlWebpackPlugin
-						template: 'index.html'
-				]
-				resolve:
-					extensions: ['.js','.coffee','.hbs']
-					modules: ['scripts','node_modules']
+			mainProd: adjustConfig webpackConfig.main,
+				devMode: false
+			rendererProd: adjustConfig webpackConfig.renderer,
+				devMode: false
 
 		exec:
 			rebuildElectronModules:
@@ -137,8 +153,8 @@ module.exports = (grunt)->
 	grunt.registerTask 'elserve', [
 		'clean'
 
-		'webpack:elMain'
-		'webpack:elRenderer'
+		'webpack:mainDev'
+		'webpack:rendererDev'
 
 		'exec:electron'
 	]
@@ -148,8 +164,8 @@ module.exports = (grunt)->
 
 		'exec:rebuildElectronModules'
 
-		'webpack:elMain'
-		'webpack:elRenderer'
+		'webpack:mainProd'
+		'webpack:rendererProd'
 
 		'electron'
 	]
