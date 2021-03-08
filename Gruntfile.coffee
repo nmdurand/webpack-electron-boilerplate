@@ -1,7 +1,12 @@
 semver = require 'semver'
 fs = require 'fs'
+path = require 'path'
 
-LIVERELOAD_PORT = process.env.LRPORT || 35729
+nodeExternals = require 'webpack-node-externals'
+CopyPlugin = require 'copy-webpack-plugin'
+HtmlWebpackPlugin = require 'html-webpack-plugin'
+
+packageInfo = require './package.json'
 
 currentNodeVersion = process.version
 expectedNodeVersion = fs.readFileSync '.nvmrc','utf-8' # must specify encoding to read as text.
@@ -14,28 +19,20 @@ module.exports = (grunt)->
 	# Load grunt tasks automatically
 	require('load-grunt-tasks')(grunt)
 
-	path = require 'path'
-
-	nodeExternals = require 'webpack-node-externals'
-	CopyPlugin = require 'copy-webpack-plugin'
-	HtmlWebpackPlugin = require 'html-webpack-plugin'
-	# webpack = require 'webpack'
-
-
-	packageInfo = require './package.json'
-
-	DIST_PATH = 'dist'
-	BUILD_PATH = 'build'
-
 	# Define the configuration for all the tasks
 	grunt.initConfig
 
 		packageInfo: packageInfo
 		electronVersion: packageInfo.devDependencies['electron']
+		
+		paths:
+			src: 'src'
+			dist: 'dist'
+			build: 'build'
 
 		clean:
-			dist: DIST_PATH
-			build: BUILD_PATH
+			dist: '<%= paths.dist %>'
+			build: '<%= paths.build %>'
 
 		webpack:
 
@@ -46,7 +43,7 @@ module.exports = (grunt)->
 				entry: './main.coffee'
 				output:
 					filename: 'main.js'
-					path: path.resolve __dirname, BUILD_PATH
+					path: path.resolve __dirname, '<%= paths.build %>'
 				target: 'electron-main'
 				externals: [nodeExternals()]
 				node:
@@ -70,7 +67,7 @@ module.exports = (grunt)->
 				entry: './scripts/main.coffee'
 				output:
 					filename: 'renderer.js'
-					path: path.join __dirname, BUILD_PATH, 'renderer'
+					path: path.join __dirname, '<%= paths.build %>', 'renderer'
 				target: 'electron-renderer'
 				devtool: 'inline-source-map'
 				module:
@@ -116,14 +113,14 @@ module.exports = (grunt)->
 				command: "npx electron-rebuild -v #{grunt.config.get('electronVersion')} -f -e node_modules/electron"
 
 			electron:
-				command: "npx electron #{BUILD_PATH}"
+				command: "npx electron <%= paths.build %>"
 
 		electron:
 			options:
 				'appBundleId': packageInfo.applicationId
 				name: packageInfo.displayName
-				dir: path.resolve __dirname, BUILD_PATH
-				out: path.resolve __dirname, DIST_PATH
+				dir: path.resolve __dirname, '<%= paths.build %>'
+				out: path.resolve __dirname, '<%= paths.dist %>'
 				electronVersion: grunt.config.get 'electronVersion' # use same version as during dev.
 				appVersion: packageInfo.version
 				asar: false
