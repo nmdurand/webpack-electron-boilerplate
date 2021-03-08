@@ -8,7 +8,7 @@ mainWindow = null
 # import '../../server/express.coffee'
 
 # Initialize electron-reload
-# require('electron-reload') __dirname
+require('electron-reload') __dirname
 
 app.on 'ready', ->
 	mainWindow = new BrowserWindow

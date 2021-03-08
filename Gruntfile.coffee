@@ -149,6 +149,19 @@ module.exports = (grunt)->
 					platform: 'darwin'
 					arch: 'x64'
 
+		watch:
+			main:
+				files: [path.resolve __dirname, '<%= paths.src %>', 'main', '**/*']
+				tasks: ['webpack:mainDev']
+			renderer:
+				files: [path.resolve __dirname, '<%= paths.src %>', 'renderer', '**/*']
+				tasks: ['webpack:rendererDev']
+
+		concurrent:
+			serve: [
+				'watch'
+				'exec:electron'
+			]
 
 	grunt.registerTask 'elserve', [
 		'clean'
@@ -156,7 +169,7 @@ module.exports = (grunt)->
 		'webpack:mainDev'
 		'webpack:rendererDev'
 
-		'exec:electron'
+		'concurrent:serve'
 	]
 
 	grunt.registerTask 'dist', [
