@@ -5,7 +5,7 @@ import { app, BrowserWindow } from 'electron'
 mainWindow = null
 
 # Set up server
-import './server/express.coffee'
+# import '../../server/express.coffee'
 
 # Initialize electron-reload
 # require('electron-reload') __dirname

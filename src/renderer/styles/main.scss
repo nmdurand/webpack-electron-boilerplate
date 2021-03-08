@@ -1,27 +1,30 @@
 
+@import '~typeface-ubuntu/index.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+body{
+	background-color: lightblue;
+}
 .hello {
 	color: red;
 }
 .bigBlue{
 	color: darkblue;
-	font-size: 30px;
+	font-size: 2rem;
 	font-family: 'Ubuntu';
 }
 .basicElement{
 	color: darkgreen;
-	font-size: 20px;
+	font-size: 1.2rem;
 	font-family: 'Ubuntu';
 }
 .icon{
-	font-size: 40px;
+	font-size: 2.5rem;
 	color: rgba(black, .4);
 	margin: 10px;
 }
 .iconComment{
-	font-size: 12px;
+	font-size: 1rem;
 	font-family: 'Ubuntu';
 	color: rgba(darkred, .4);
-}
-body{
-	background-color: lightblue;
 }
