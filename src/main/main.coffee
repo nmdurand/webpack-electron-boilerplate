@@ -8,12 +8,14 @@ mainWindow = null
 # import '../../server/express.coffee'
 
 # Initialize electron-reload
-require('electron-reload') __dirname
+require('electron-reload') __dirname,
+	electron: path.join(process.cwd(), 'node_modules', '.bin', 'electron')
 
 app.on 'ready', ->
 	mainWindow = new BrowserWindow
 		webPreferences:
 			nodeIntegration: true
+			contextIsolation: false
 
 	mainWindow.loadURL(
 		url.format
